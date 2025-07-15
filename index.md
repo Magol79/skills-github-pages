@@ -1,6 +1,6 @@
 ---
 title: The New Zone of Proximal Development!
 ---
-# What is The New ZDP?
-This is my lab page where I document my ideas and projects.
+# What is The New ZPD?
+This is my blog where I document my ideas and projects.
 
