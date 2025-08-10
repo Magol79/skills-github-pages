@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Segmented Bar Math</title>
+<style>
+body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; }
+.bar-container { width: 80%; max-width: 600px; border: 1px solid #ccc; margin-bottom: 20px; display: flex; }
+.segment { flex-grow: 1; height: 30px; background-color: lightblue; }
+.expression-container { display: flex; flex-direction: column; align-items: center; }
+.expression { padding: 10px 20px; margin: 5px; border: 1px solid #ddd; cursor: pointer; border-radius: 5px; }
+.correct { background-color: #ccffcc !important; }
+.incorrect { background-color: #ffcccc !important; }
+</style>
+</head>
+<body>
+
+<div id="bar-container" class="bar-container">
+</div>
+
+<div id="expression-container" class="expression-container">
+</div>
+
+<script>
+function generateBarAndExpressions() {
+    const barContainer = document.getElementById('bar-container');
+    const expressionContainer = document.getElementById('expression-container');
+
+    // Clear previous content
+    barContainer.innerHTML = '';
+    expressionContainer.innerHTML = '';
+
+    // Generate random number of segments (1-10)
+    const numSegments = Math.floor(Math.random() * 10) + 1;
+
+    // Create the segmented bar
+    for (let i = 0; i < numSegments; i++) {
+        const segment = document.createElement('div');
+        segment.classList.add('segment');
+        barContainer.appendChild(segment);
+    }
+
+    const correctAnswers = [];
+    const expressionsData = [];
+
+    // Function to generate a random term
+    function getRandomTerm() {
+        return Math.floor(Math.random() * 10) + 1;
+    }
+
+    // Function to create an expression string
+    function createExpression(num1, num2) {
+        return `${num1} + ${num2}`;
+    }
+
+    // Generate four expressions, ensuring at least one is correct
+    const correctIndex = Math.floor(Math.random() * 4);
+    for (let i = 0; i < 4; i++) {
+        let num1, num2, sum;
+        if (i === correctIndex) {
+            num1 = getRandomTerm();
+            num2 = numSegments - num1;
+            if (num2 < 1) {
+                // If the second number is invalid, regenerate
+                num1 = Math.floor(numSegments / 2);
+                num2 = numSegments - num1;
+            }
+            sum = numSegments;
+            correctAnswers.push(createExpression(num1, num2));
+        } else {
+            num1 = getRandomTerm();
+            num2 = getRandomTerm();
+            sum = num1 + num2;
+        }
+        expressionsData.push({ expression: createExpression(num1, num2), value: sum });
+    }
+
+    let correctFoundCount = 0;
+    const foundCorrectExpressions = new Set();
+
+    // Display the expressions
+    expressionsData.forEach(item => {
+        const expressionDiv = document.createElement('div');
+        expressionDiv.classList.add('expression');
+        expressionDiv.textContent = item.expression;
+        expressionDiv.addEventListener('click', () => {
+            const isCorrect = item.value === numSegments && correctAnswers.includes(item.expression);
+            if (isCorrect && !foundCorrectExpressions.has(item.expression)) {
+                expressionDiv.classList.add('correct');
+                foundCorrectExpressions.add(item.expression);
+                correctFoundCount++;
+                if (correctFoundCount === correctAnswers.length) {
+                    setTimeout(generateBarAndExpressions, 1500); // Reload after a short delay
+                }
+            } else if (!isCorrect) {
+                expressionDiv.classList.add('incorrect');
+                setTimeout(() => expressionDiv.classList.remove('incorrect'), 500);
+            }
+        });
+        expressionContainer.appendChild(expressionDiv);
+    });
+}
+
+// Initial generation
+generateBarAndExpressions();
+</script>
+
+</body>
+</html>
