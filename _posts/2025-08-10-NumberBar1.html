@@ -28,12 +28,14 @@ At least one of the expressions must match the number of segments shown in the b
 When the user selects an expression it will light up green if it matches the bar, otherwise it will light up red. 
 When the user has found all matching expressions, the screen will reload with a new bar and expressions.</p>
 
+<div id="app-frame" border: 3px solid #000>    
 <div id="bar-container" class="bar-container">
 </div>
 
 <div id="expression-container" class="expression-container">
 </div>
-
+</div>
+    
 <script>
 function generateBarAndExpressions() {
     const barContainer = document.getElementById('bar-container');
