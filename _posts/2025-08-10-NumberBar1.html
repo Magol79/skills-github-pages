@@ -14,6 +14,7 @@ body { font-family: sans-serif; display: flex; flex-direction: column; align-ite
 .expression { padding: 10px 20px; margin: 5px; border: 1px solid #ddd; cursor: pointer; border-radius: 5px; }
 .correct { background-color: #ccffcc !important; }
 .incorrect { background-color: #ffcccc !important; }
+.outer-frame { width: 650px; border: 3px #000 }
 </style>
 </head>
 <body>
@@ -28,7 +29,7 @@ At least one of the expressions must match the number of segments shown in the b
 When the user selects an expression it will light up green if it matches the bar, otherwise it will light up red. 
 When the user has found all matching expressions, the screen will reload with a new bar and expressions.</p>
 
-<div id="app-frame" border: 3px solid #000>    
+<div id="app-frame" class="outer-frame">    
 <div id="bar-container" class="bar-container">
 </div>
 
